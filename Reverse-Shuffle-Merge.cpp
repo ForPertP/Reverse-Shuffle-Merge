@@ -49,3 +49,21 @@ string reverseShuffleMerge(string s)
 
     return string(A.begin(), A.end());
 }
+
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    string result = reverseShuffleMerge(s);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
