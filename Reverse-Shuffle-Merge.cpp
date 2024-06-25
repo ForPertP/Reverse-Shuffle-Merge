@@ -1,3 +1,14 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+/*
+ * Complete the 'reverseShuffleMerge' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts STRING s as parameter.
+ */
+
 string reverseShuffleMerge(string s)
 {
     int n = s.size();
