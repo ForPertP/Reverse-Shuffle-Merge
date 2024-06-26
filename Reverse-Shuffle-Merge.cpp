@@ -12,42 +12,47 @@ using namespace std;
 string reverseShuffleMerge(string s)
 {
     int n = s.size();
+    int alphabetCount = 26;
+    std::string rs(s.rbegin(), s.rend());
+    std::vector<int> frequency (alphabetCount, 0);
 
-    vector<char> sarr(s.rbegin(), s.rend());
-    int alpha_size = 26;
-    vector<int> freq(alpha_size, 0);
-
-    for (int i = 0; i < n; ++i)
+    for (char c : rs)
     {
-        freq[sarr[i] - 'a']++;
+        frequency [c - 'a']++;
     }
 
-    vector<int> did_use(alpha_size, 0);
-    vector<int> can_use(freq.begin(), freq.end());
-    vector<char> A;
+    std::vector<int> needed(alphabetCount, 0);
+    std::vector<int> used(alphabetCount, 0);
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < alphabetCount; ++i)
     {
-        if (did_use[sarr[i] - 'a'] < freq[sarr[i] - 'a'] / 2)
+        needed[i] = frequency [i] / 2;
+    }
+
+    std::string result;
+
+    for (char c : rs)
+    {
+        int index = c - 'a';
+
+        if (used[index] < needed[index])
         {
-            while (A.size() > 0 && sarr[i] < A.back() &&
-                did_use[A.back() - 'a'] + can_use[A.back() - 'a'] - 1 >= freq[A.back() - 'a'] / 2)
+            while (!result.empty() && c < result.back() &&
+                   used[result.back() - 'a'] + frequency[result.back() - 'a']
+                   > needed[result.back() - 'a'])
             {
-                did_use[A.back() - 'a']--;
-                A.pop_back();
+                used[result.back() - 'a']--;
+                result.pop_back();
             }
 
-            A.push_back(sarr[i]);
-            did_use[sarr[i] - 'a']++;
-            can_use[sarr[i] - 'a']--;
+            result.push_back(c);
+            used[index]++;
         }
-        else
-        {
-            can_use[sarr[i] - 'a']--;
-        }
+
+        frequency[index]--;
     }
 
-    return string(A.begin(), A.end());
+    return result;
 }
 
 
@@ -66,4 +71,3 @@ int main()
 
     return 0;
 }
-
