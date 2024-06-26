@@ -26,7 +26,7 @@ string reverseShuffleMerge(string s)
 
     for (int i = 0; i < alphabetCount; ++i)
     {
-        needed[i] = frequency [i] / 2;
+        needed[i] = frequency[i] / 2;
     }
 
     std::string result;
