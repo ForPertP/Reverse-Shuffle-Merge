@@ -14,7 +14,7 @@ string reverseShuffleMerge(string s)
     int n = s.size();
     int alphabetCount = 26;
     std::string rs(s.rbegin(), s.rend());
-    std::vector<int> frequency (alphabetCount, 0);
+    std::vector<int> frequency(alphabetCount, 0);
 
     for (char c : rs)
     {
