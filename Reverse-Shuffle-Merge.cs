@@ -24,7 +24,48 @@ class Result
 
     public static string reverseShuffleMerge(string s)
     {
-        return new string();
+        int n = s.Length;
+        int alphabetCount = 26;
+        char[] rs = s.Reverse().ToArray();
+        int[] frequency = new int[alphabetCount];
+
+        foreach (char c in rs)
+        {
+            frequency[c - 'a']++;
+        }
+
+        int[] needed = new int[alphabetCount];
+        int[] used = new int[alphabetCount];
+
+        for (int i = 0; i < alphabetCount; ++i)
+        {
+            needed[i] = frequency[i] / 2;
+        }
+
+        List<char> result = new List<char>();
+
+        foreach (char c in rs)
+        {
+            int index = c - 'a';
+
+            if (used[index] < needed[index])
+            {
+                while (result.Count > 0 && c < result.Last() &&
+                       used[result.Last() - 'a'] + frequency[result.Last() - 'a']
+                       > needed[result.Last() - 'a'])
+                {
+                    used[result.Last() - 'a']--;
+                    result.RemoveAt(result.Count - 1);
+                }
+
+                result.Add(c);
+                used[index]++;
+            }
+
+            frequency[index]--;
+        }
+
+        return new string(result.ToArray());
     }
 
 }
