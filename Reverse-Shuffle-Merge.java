@@ -20,7 +20,42 @@ class Result {
      */
 
     public static String reverseShuffleMerge(String s) {
+        int n = s.length();
+        int alphabetCount = 26;
+        char[] rs = new StringBuilder(s).reverse().toString().toCharArray();
+        int[] frequency = new int[alphabetCount];
+
+        for (char c : rs) {
+            frequency[c - 'a']++;
+        }
+
+        int[] needed = new int[alphabetCount];
+        int[] used = new int[alphabetCount];
+
+        for (int i = 0; i < alphabetCount; ++i) {
+            needed[i] = frequency[i] / 2;
+        }
+
         StringBuilder result = new StringBuilder();
+
+        for (char c : rs) {
+            int index = c - 'a';
+
+            if (used[index] < needed[index]) {
+                while (result.length() > 0 && c < result.charAt(result.length() - 1) &&
+                       used[result.charAt(result.length() - 1) - 'a'] + frequency[result.charAt(result.length() - 1) - 'a']
+                       > needed[result.charAt(result.length() - 1) - 'a']) {
+                    used[result.charAt(result.length() - 1) - 'a']--;
+                    result.deleteCharAt(result.length() - 1);
+                }
+
+                result.append(c);
+                used[index]++;
+            }
+
+            frequency[index]--;
+        }
+
         return result.toString();
     }
 
